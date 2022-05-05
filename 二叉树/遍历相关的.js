@@ -83,9 +83,6 @@ function traverseStack(tree) {
       }
       stack.pop();
       current = current.rightNode;
-      if(current){
-        result.push(current); // 保存右子树
-      }
     }
     return result;
   }
@@ -122,7 +119,7 @@ function traverseStack(tree){
   let root = tree, current;
   current = current.leftNode;
   while(current || stack.length>0){
-    while(current){
+    while(current || stack.length > 0){
       stack.push(current)
       current = current.leftNode;
     }
@@ -135,7 +132,7 @@ function traverseStack(tree){
 }
 
 
-// 问题：
+// 四、
 // 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
 // 如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
 
@@ -175,5 +172,66 @@ function VerifySquenceOfBST(sequence) {
   }
 }
 
+// 测试
 // let a = [5,3,7,2,4,6,8]
 // console.log(VerifySquenceOfBST(a))
+
+
+
+// 五、最大深度
+
+// 给定一个二叉树，找出其最大深度。
+// 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+// 说明: 叶子节点是指没有子节点的节点。
+
+// 示例：
+// 给定二叉树 [3,9,20,null,null,15,7]，
+//     3
+//    / \
+//   9  20
+//     /  \
+//    15   7
+// 返回它的最大深度 3 。
+
+function tranverse (tree){
+  if(!tree) return;
+  // 核心点就是 左子树和右子树最大值加1
+  return Math.max(tranverse(tree.leftNode) , tranverse(tree.rightNode)) + 1;
+}
+
+// 这道题和求叶子节点差不多
+// 核心是 左子树加右子树在加一个根节点
+
+
+// 六、最小深度
+
+// 给定一个二叉树，找出其最小深度。
+// 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+// 说明: 叶子节点是指没有子节点的节点。
+
+// 示例:
+// 给定二叉树 [3,9,20,null,null,15,7],
+
+//     3
+//    / \
+//   9  20
+//     /  \
+//    15   7
+// 返回它的最小深度 2
+
+
+// 核心:
+// 左右子树都不为空：左子树深度和右子树最小深度的最小值 + 1
+// 左树为空：右子树最小深度的最小值 + 1
+// 右树为空：左子树最小深度 + 1
+function tranverse(tree) {
+  if(!tree) return 0;
+
+  if(!tree.leftNode){
+    return tranverse(tree.rightNode)
+  }
+  if(!tree.rightNode){
+    return tranverse(tree.leftNode)
+  }
+  return Math.min(tranverse(tree.rightNode) , tranverse(tree.leftNode)) + 1;
+}
